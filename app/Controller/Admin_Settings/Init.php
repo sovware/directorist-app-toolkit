@@ -49,6 +49,13 @@ class Init {
             'default-img' => DIRECTORIST_ASSETS . 'images/grid.jpg',
         ];
 
+        // Other Section Fields
+        $fields['app_support_link'] = [
+            'label' => __('Support Link', 'directorist'),
+            'type'  => 'text',
+            'value' => home_url(),
+        ];
+
         return $fields;
     }
 
@@ -72,6 +79,14 @@ class Init {
                 'app_banner_title', 
                 'app_banner_subtitle',
                 'app_banner_thumbnail'
+            ]),
+        ];
+
+        // Other Settings Section
+        $settings_sections['other_settings'] = [
+            'title' => __('Other Settings', 'directorist'),
+            'fields' =>  apply_filters( 'directorist_app_banner_settings_fields', [
+                'app_support_link',
             ]),
         ];
 
