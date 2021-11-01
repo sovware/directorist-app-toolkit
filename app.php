@@ -45,6 +45,8 @@ final class DirectoristAppToolkit {
     public static function get_controllers() {
         return [
             Controller\Notification\Init::class,
+            Controller\Rest_API\Init::class,
+            Controller\Admin_Settings\Init::class,
         ];
     }
 
