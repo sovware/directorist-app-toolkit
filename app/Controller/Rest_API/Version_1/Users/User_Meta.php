@@ -56,7 +56,7 @@ class User_Meta extends User_Rest_Base {
 		$status['message'] = '';
 
 		$user_id = ( isset( $request['id'] ) ) ? $request['id'] : 0;
-		$meta_key = ( isset( $request['meta_key'] ) ) ? $request['meta_key'] : '';
+		$metas = ( isset( $request['metas'] ) ) ? $request['metas'] : '';
 
 		$user = get_userdata( $user_id );
 
@@ -65,9 +65,26 @@ class User_Meta extends User_Rest_Base {
 			return $status;
 		}
 
-		$user_metas = get_user_meta( $user_id, $meta_key, true );
+		if ( empty( $metas ) ) {
+			$user_metas = get_user_meta( $user_id );
+			return $user_metas;
+		}
 
-		return $user_metas;
+		$metas = explode( ',', $metas );
+
+		if ( ! is_array( $metas ) || empty( $metas ) ) {
+			$user_metas = get_user_meta( $user_id );
+			return $user_metas;
+		}
+
+		$meta_datas = [];
+
+		foreach ( $metas as $meta_key ) {
+			$user_meta = get_user_meta( $user_id, $meta_key, true );
+			$meta_datas[ $meta_key ] = $user_meta;
+		}
+
+		return $meta_datas;
 	}
 
 
@@ -101,9 +118,10 @@ class User_Meta extends User_Rest_Base {
 			update_user_meta(  $user_id, $key, $value );
 		}
 
-		$updated_user_metas = get_user_meta( $user_id );
+		$status['success'] = true;
+		$status['message'] = 'Data updated successfully';
 
-		return $updated_user_metas;
+		return $status;
 	}
 	
 }
