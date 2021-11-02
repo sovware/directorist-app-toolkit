@@ -11,18 +11,12 @@ namespace DirectoristAppToolkit\Controller\Rest_API\Version_1\Users;
 defined( 'ABSPATH' ) || exit;
 
 use \WP_REST_Server;
+use \WP_Error;
 
 /**
  * Admin Settings class.
  */
-class Users {
-
-	protected $namespace = 'directorist-dev-kit/v1';
-	protected $rest_base = 'user';
-
-    public function __construct() {
-		add_action( 'rest_api_init', [ $this, 'register_routes'] );
-    }
+class User_Meta extends User_Rest_Base {
 
 	/**
 	 * Register the routes
@@ -38,29 +32,25 @@ class Users {
 				],
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'get_user_meta' ],
+					'callback'            => [ $this, 'get_items' ],
 					'permission_callback' => [ $this, 'get_items_permissions_check' ],
 				],
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'update_user_meta' ],
-					'permission_callback' => [ $this, 'get_items_permissions_check' ],
+					'callback'            => [ $this, 'create_item' ],
+					'permission_callback' => [ $this, 'create_item_permissions_check' ],
 				],
 			],
 		);
 	}
 
 	/**
-	 * Get items permissions check
+	 * Get user metas
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_Error|WP_REST_Response
 	 */
-	public function get_items_permissions_check() {
-		return true;
-	}
-
-	/**
-	 * Get User Meta
-	 */
-	public function get_user_meta( $request ) {
+	public function get_items( $request ) {
 		$status = [];
 		$status['success'] = false;
 		$status['message'] = '';
@@ -80,10 +70,14 @@ class Users {
 		return $user_metas;
 	}
 
+
 	/**
-	 * Update User Meta
+	 * Update user meta
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_Error|WP_REST_Response
 	 */
-	public function update_user_meta( $request ) {
+	public function create_item( $request ) {
 		$status = [];
 		$status['success'] = false;
 		$status['message'] = '';
@@ -111,4 +105,5 @@ class Users {
 
 		return $updated_user_metas;
 	}
+	
 }
