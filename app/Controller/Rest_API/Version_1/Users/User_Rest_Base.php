@@ -2,7 +2,7 @@
 /**
  * Rest Listings Controller
  *
- * @package DirectoristAppToolkit\Controller\Rest_API\Version_1\Users\User_Rest_Base
+ * @package DirectoristAppToolkit\Controller\Rest_API\Version_1
  * @version  1.0.0
  */
 

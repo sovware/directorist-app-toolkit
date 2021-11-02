@@ -1,4 +1,10 @@
 <?php
+/**
+ * Initialize Rest API
+ *
+ * @package DirectoristAppToolkit\Controller\Rest_API
+ * @version  1.0.0
+ */
 
 namespace DirectoristAppToolkit\Controller\Rest_API;
 

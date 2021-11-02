@@ -2,7 +2,7 @@
 /**
  * Rest Admin Settings Base Controller
  *
- * @package DirectoristAppToolkit\Controller\Rest_API\Version_1\Admin_Settings\Admin_Settings_Rest_Base
+ * @package DirectoristAppToolkit\Controller\Rest_API\Version_1
  * @version  1.0.0
  */
 

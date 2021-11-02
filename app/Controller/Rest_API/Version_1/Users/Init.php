@@ -1,4 +1,10 @@
 <?php
+/**
+ * Initialize Users Routes
+ *
+ * @package DirectoristAppToolkit\Controller\Rest_API\Version_1
+ * @version  1.0.0
+ */
 
 namespace DirectoristAppToolkit\Controller\Rest_API\Version_1\Users;
 
