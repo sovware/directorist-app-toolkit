@@ -9,11 +9,10 @@ use DirectoristAppToolkit\Helper\Traits as HelperTraits;
 
 class Init {
 
-    use HelperTraits\Service_Registrar;
-    // use HelperTraits\Rest_Route_Registrar;
+    use HelperTraits\Rest_Route_Registrar;
 
     public function __construct() {
-        $this->register_serivces( $this->get_controllers() );
+        $this->register_rest_routes( $this->get_controllers() );
     }
 
     /**
@@ -24,8 +23,7 @@ class Init {
      */
     public static function get_controllers() {
         return [
-            Users::class,
-            // User_Meta::class,
+            User_Meta::class,
         ];
     }
 }

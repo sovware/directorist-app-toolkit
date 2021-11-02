@@ -24,7 +24,7 @@ private function register_rest_routes( $controllers = [] ) {
         $controller_class = new $controller();
 
         if ( method_exists( $controller_class, 'register_routes' ) ) {
-            // add_action( 'rest_api_init', [ $controller_class, 'register_routes'] );
+            add_action( 'rest_api_init', [ $controller_class, 'register_routes'] );
         }
     }
 }

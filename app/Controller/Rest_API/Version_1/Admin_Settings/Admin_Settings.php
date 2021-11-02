@@ -20,10 +20,6 @@ class Admin_Settings {
 	protected $namespace = 'directorist-dev-kit/v1';
 	protected $rest_base = 'admin-settings';
 
-    public function __construct() {
-		add_action( 'rest_api_init', [ $this, 'register_routes'] );
-    }
-
 	/**
 	 * Register the routes
 	 */

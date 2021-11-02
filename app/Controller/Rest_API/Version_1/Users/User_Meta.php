@@ -34,11 +34,11 @@ class User_Meta extends User_Rest_Base {
 					'callback'            => [ $this, 'get_items' ],
 					'permission_callback' => [ $this, 'get_items_permissions_check' ],
 				],
-				// [
-				// 	'methods'             => WP_REST_Server::CREATABLE,
-				// 	'callback'            => [ $this, 'create_item' ],
-				// 	'permission_callback' => [ $this, 'get_items_permissions_check' ],
-				// ],
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'create_item' ],
+					'permission_callback' => [ $this, 'get_items_permissions_check' ],
+				],
 			],
 		);
 	}

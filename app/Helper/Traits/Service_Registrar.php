@@ -23,6 +23,7 @@ private function register_serivces( $services = [], $method = '' ) {
 
         if ( empty( $method ) ) {
             new $service();
+            continue;
         }
 
         $controller = new $service();
