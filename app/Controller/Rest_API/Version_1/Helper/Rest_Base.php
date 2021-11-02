@@ -73,7 +73,7 @@ abstract class Rest_Base extends WP_REST_Controller {
 			$schema['properties'][ $field_name ] = $field_options['schema'];
 		}
 
-		$schema['properties'] = apply_filters( 'directorist_dev_kit_rest_' . $object_type . '_schema', $schema['properties'] );
+		$schema['properties'] = apply_filters( 'directorist_app_toolkit_rest_' . $object_type . '_schema', $schema['properties'] );
 
 		return $schema;
 	}
@@ -164,7 +164,7 @@ abstract class Rest_Base extends WP_REST_Controller {
 	 * @return bool|WP_Error
 	 */
 	protected function check_batch_limit( $items ) {
-		$limit = apply_filters( 'directorist_dev_kit_rest_batch_items_limit', 100, $this->get_normalized_rest_base() );
+		$limit = apply_filters( 'directorist_app_toolkit_rest_batch_items_limit', 100, $this->get_normalized_rest_base() );
 		$total = 0;
 
 		if ( ! empty( $items['create'] ) ) {
@@ -181,7 +181,7 @@ abstract class Rest_Base extends WP_REST_Controller {
 
 		if ( $total > $limit ) {
 			/* translators: %s: items limit */
-			return new WP_Error( 'directorist_dev_kit_rest_request_entity_too_large', sprintf( __( 'Unable to accept more than %s items for this request.', 'directorist-app-toolkit' ), $limit ), array( 'status' => 413 ) );
+			return new WP_Error( 'directorist_app_toolkit_rest_request_entity_too_large', sprintf( __( 'Unable to accept more than %s items for this request.', 'directorist-app-toolkit' ), $limit ), array( 'status' => 413 ) );
 		}
 
 		return true;
