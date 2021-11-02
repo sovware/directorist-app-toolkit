@@ -38,13 +38,13 @@ class Users {
 				],
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_user_meta' ),
-					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+					'callback'            => [ $this, 'get_user_meta' ],
+					'permission_callback' => [ $this, 'get_items_permissions_check' ],
 				],
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'update_user_meta' ),
-					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+					'callback'            => [ $this, 'update_user_meta' ],
+					'permission_callback' => [ $this, 'get_items_permissions_check' ],
 				],
 			],
 		);
