@@ -34,7 +34,7 @@ abstract class User_Rest_Base extends Rest_Base {
 		}
 
 		if ( ! $permissions ) {
-			return new WP_Error( 'directorist_dev_kit_rest_cannot_view', __( 'Sorry, you cannot list resources.', 'directorist-dev-kit' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'directorist_dev_kit_rest_cannot_view', __( 'Sorry, you cannot list resources.', 'directorist-app-toolkit' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 
 		return true;
@@ -54,7 +54,7 @@ abstract class User_Rest_Base extends Rest_Base {
 			$user = get_userdata( $id );
 
 			if ( empty( $user ) ) {
-				return new WP_Error( 'directorist_dev_kit_rest_user_invalid', __( 'Resource does not exist.', 'directorist-dev-kit' ), array( 'status' => 404 ) );
+				return new WP_Error( 'directorist_dev_kit_rest_user_invalid', __( 'Resource does not exist.', 'directorist-app-toolkit' ), array( 'status' => 404 ) );
 			}
 
 			return $this->rest_check_user_permissions( $context, $user->ID );
