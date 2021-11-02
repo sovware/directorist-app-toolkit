@@ -10,7 +10,7 @@ trait Service_Registrar {
  * @param array $services
  * @return void
  */
-private function register_serivces( $services = [] ) {
+private function register_serivces( $services = [], $method = '' ) {
 
     if (  ! is_array( $services ) ) {
         return;
@@ -21,7 +21,15 @@ private function register_serivces( $services = [] ) {
             continue;
         }
 
-        new $service();
+        if ( empty( $method ) ) {
+            new $service();
+        }
+
+        $controller = new $service();
+
+        if ( method_exists( $controller, $method ) ) {
+            $controller->$method();
+        }
     }
 }
 }

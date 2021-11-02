@@ -29,13 +29,16 @@ class Admin_Settings {
 	 */
 	public function register_routes() {
 		register_rest_route(
-			$this->namespace, '/'. $this->rest_base,
+			$this->namespace, '/'. $this->rest_base, 
 			[
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => [ $this, 'get_settings' ],
-				'permission_callback' => [ $this, 'get_items_permissions_check' ],
-				'args'                => [],
-			],
+				[
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => [ $this, 'get_settings' ],
+					'permission_callback' => [ $this, 'get_items_permissions_check' ],
+					'args'                => [],
+				],
+			]
+			
 		);
 	}
 
