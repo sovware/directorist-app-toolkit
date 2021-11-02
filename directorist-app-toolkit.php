@@ -11,7 +11,7 @@
  * Plugin Name:       Directorist App Toolkit
  * Plugin URI:        https://directorist.com/extensions/
  * Description:       Manage your Directorist mobile app with this extension
- * Version:           0.1.0
+ * Version:           1.0.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Sovware
