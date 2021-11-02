@@ -1,6 +1,6 @@
 <?php
 
-namespace DirectoristAppToolkit\Controller\Rest_API;
+namespace DirectoristAppToolkit\Controller\Rest_API\Version_1\Users;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -23,7 +23,7 @@ class Init {
      */
     public static function get_controllers() {
         return [
-            Version_1\Init::class,
+            Users::class,
         ];
     }
 }

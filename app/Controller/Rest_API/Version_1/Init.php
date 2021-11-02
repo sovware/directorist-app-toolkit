@@ -2,6 +2,8 @@
 
 namespace DirectoristAppToolkit\Controller\Rest_API\Version_1;
 
+defined( 'ABSPATH' ) || exit;
+
 use DirectoristAppToolkit\Helper\Traits as HelperTraits;
 
 
@@ -22,6 +24,7 @@ class Init {
     public static function get_controllers() {
         return [
             Admin_Settings\Init::class,
+            Users\Init::class,
         ];
     }
 }

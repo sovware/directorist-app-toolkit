@@ -2,6 +2,8 @@
 
 namespace DirectoristAppToolkit\Controller\Rest_API\Version_1\Admin_Settings;
 
+defined( 'ABSPATH' ) || exit;
+
 use DirectoristAppToolkit\Helper\Traits as HelperTraits;
 
 

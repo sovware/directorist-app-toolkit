@@ -10,6 +10,8 @@ namespace DirectoristAppToolkit\Controller\Rest_API\Version_1\Admin_Settings;
 
 defined( 'ABSPATH' ) || exit;
 
+use \WP_REST_Server;
+
 /**
  * Admin Settings class.
  */
@@ -29,7 +31,7 @@ class Admin_Settings {
 		register_rest_route(
 			$this->namespace, '/'. $this->rest_base,
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_settings' ),
 				'permission_callback' => array( $this, 'get_items_permissions_check' ),
 				'args'                => [],
@@ -48,7 +50,6 @@ class Admin_Settings {
 	 * Get Settings
 	 */
 	public function get_settings() {
-
 		$settings = get_option('atbdp_option');
 
 		if ( is_array( $settings ) ) {
