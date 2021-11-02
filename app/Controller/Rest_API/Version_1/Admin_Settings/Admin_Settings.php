@@ -1,6 +1,6 @@
 <?php
 /**
- * Rest Listings Controller
+ * Rest Admin Settings Controller
  *
  * @package Directorist\Rest_Api
  * @version  1.0.0
@@ -15,10 +15,7 @@ use \WP_REST_Server;
 /**
  * Admin Settings class.
  */
-class Admin_Settings {
-
-	protected $namespace = 'directorist-dev-kit/v1';
-	protected $rest_base = 'admin-settings';
+class Admin_Settings extends Admin_Settings_Rest_Base {
 
 	/**
 	 * Register the routes
@@ -29,8 +26,8 @@ class Admin_Settings {
 			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'get_settings' ],
-					'permission_callback' => [ $this, 'get_items_permissions_check' ],
+					'callback'            => [ $this, 'get_items' ],
+					// 'permission_callback' => [ $this, 'get_items_permissions_check' ],
 					'args'                => [],
 				],
 			]
@@ -39,16 +36,12 @@ class Admin_Settings {
 	}
 
 	/**
-	 * Get items permissions check
+	 * Get Admin Settings
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_Error|WP_REST_Response
 	 */
-	public function get_items_permissions_check() {
-		return true;
-	}
-
-	/**
-	 * Get Settings
-	 */
-	public function get_settings() {
+	public function get_items( $request ) {
 		$settings = get_option('atbdp_option');
 
 		if ( is_array( $settings ) ) {
