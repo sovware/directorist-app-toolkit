@@ -3,8 +3,8 @@
  * Directorist App Toolkit
  *
  * @package           DirectoristAppToolkit
- * @author            Sovware
- * @copyright         2021 Sovware
+ * @author            wpWax
+ * @copyright         2021 wpWax
  * @license           GPL-2.0-or-later
  *
  * @wordpress-plugin
@@ -14,8 +14,8 @@
  * Version:           1.0.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
- * Author:            Sovware
- * Author URI:        https://sovware.com/
+ * Author:            wpWax
+ * Author URI:        https://wpwax.com/
  * Text Domain:       directorist-app-toolkit
  * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
