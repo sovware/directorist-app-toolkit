@@ -1,8 +1,8 @@
 <?php
 /**
- * Rest Listings Controller
+ * Rest User Meta Controller
  *
- * @package Directorist\Rest_Api
+ * @package DirectoristAppToolkit\Controller\Rest_API\Version_1
  * @version  1.0.0
  */
 
