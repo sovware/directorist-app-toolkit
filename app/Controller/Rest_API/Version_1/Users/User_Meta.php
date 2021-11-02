@@ -11,6 +11,7 @@ namespace DirectoristAppToolkit\Controller\Rest_API\Version_1\Users;
 defined( 'ABSPATH' ) || exit;
 
 use \WP_REST_Server;
+use \WP_Error;
 
 /**
  * Admin Settings class.
@@ -32,12 +33,12 @@ class User_Meta extends User_Rest_Base {
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'get_items' ],
-					// 'permission_callback' => [ $this, 'get_items_permissions_check' ],
+					'permission_callback' => [ $this, 'get_items_permissions_check' ],
 				],
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'create_item' ],
-					// 'permission_callback' => [ $this, 'get_items_permissions_check' ],
+					'permission_callback' => [ $this, 'create_item_permissions_check' ],
 				],
 			],
 		);
@@ -104,4 +105,5 @@ class User_Meta extends User_Rest_Base {
 
 		return $updated_user_metas;
 	}
+	
 }
