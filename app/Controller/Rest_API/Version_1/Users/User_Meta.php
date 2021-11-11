@@ -120,6 +120,7 @@ class User_Meta extends User_Rest_Base {
 
 		$status['success'] = true;
 		$status['message'] = 'Data updated successfully';
+		$status['metas'] = $user_metas;
 
 		return $status;
 	}

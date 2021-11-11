@@ -23,26 +23,20 @@ class Init {
             'value' => '#000000',
         ];
 
-        $fields['app_accent_color'] = [
-            'label' => __('Accent Color', 'directorist'),
-            'type'  => 'color',
-            'value' => '#FFFFFF',
-        ];
-
         // Banner Section Fields
-        $fields['app_banner_title'] = [
+        $fields['app_home_banner_title'] = [
             'label' => __('Banner Title', 'directorist'),
             'type'  => 'text',
             'value' => 'Explore anything',
         ];
 
-        $fields['app_banner_subtitle'] = [
+        $fields['app_home_banner_subtitle'] = [
             'label' => __('Banner Subtitle', 'directorist'),
             'type'  => 'text',
             'value' => 'Find the best match of your interest',
         ];
 
-        $fields['app_banner_thumbnail'] = [
+        $fields['app_home_banner_thumbnail'] = [
             'label'       => __('Banner Thumbnail', 'directorist'),
             'type'        => 'wp-media-picker',
             'value'       => '',

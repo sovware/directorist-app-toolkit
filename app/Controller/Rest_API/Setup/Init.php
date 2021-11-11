@@ -1,12 +1,12 @@
 <?php
 /**
- * Initialize Rest API
+ * Initialize Rest API Setup
  *
- * @package DirectoristAppToolkit\Controller\Rest_API
+ * @package DirectoristAppToolkit\Controller\Rest_API\Setup
  * @version  1.0.0
  */
 
-namespace DirectoristAppToolkit\Controller\Rest_API;
+namespace DirectoristAppToolkit\Controller\Rest_API\Setup;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,8 +29,7 @@ class Init {
      */
     public static function get_controllers() {
         return [
-            Setup\Init::class,
-            Version_1\Init::class,
+            JWT_Setup::class,
         ];
     }
 }
