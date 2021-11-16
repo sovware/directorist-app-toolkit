@@ -94,11 +94,10 @@ abstract class User_Rest_Base extends Rest_Base {
 	 */
 	protected function rest_check_user_permissions( $context = 'read', $object_id = 0 ) {
 		$contexts = array(
-			'read'   => 'list_users',
-			'create' => 'promote_users',
-			'edit'   => 'edit_users',
-			'delete' => 'delete_users',
-			'batch'  => 'promote_users',
+			'read'   => 'edit_user',
+			'create' => 'edit_user',
+			'edit'   => 'edit_user',
+			'delete' => 'edit_user',
 		);
 
 		$permission = current_user_can( $contexts[ $context ], $object_id );
