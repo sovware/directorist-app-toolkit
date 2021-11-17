@@ -43,6 +43,28 @@ class Init {
             'default-img' => DIRECTORIST_ASSETS . 'images/grid.jpg',
         ];
 
+        // Label Section Fields
+        $fields['app_signin_greetings_title'] = [
+            'label' => __('Signin Greetings Title', 'directorist'),
+            'type'  => 'text',
+            'value' => 'Hi There',
+        ];
+        $fields['app_signin_greetings_subtitle'] = [
+            'label' => __('Signin Greetings Subtitle', 'directorist'),
+            'type'  => 'text',
+            'value' => 'Its\' good to see you',
+        ];
+        $fields['app_signup_greetings_title'] = [
+            'label' => __('Signup Greetings Title', 'directorist'),
+            'type'  => 'text',
+            'value' => 'Wellcome to Directorist',
+        ];
+        $fields['app_signup_greetings_subtitle'] = [
+            'label' => __('Signup Greetings Subtitle', 'directorist'),
+            'type'  => 'text',
+            'value' => 'Get started in less then 30 seconds',
+        ];
+
         // Other Section Fields
         $fields['app_support_link'] = [
             'label' => __('Support Link', 'directorist'),
@@ -70,9 +92,19 @@ class Init {
         $settings_sections['banner_settings'] = [
             'title' => __('Banner Settings', 'directorist'),
             'fields' =>  apply_filters( 'directorist_app_banner_settings_fields', [
-                'app_banner_title', 
-                'app_banner_subtitle',
-                'app_banner_thumbnail'
+                'app_home_banner_title', 
+                'app_home_banner_subtitle',
+            ]),
+        ];
+
+        // Label Settings Section
+        $settings_sections['label_settings'] = [
+            'title' => __('Label Settings', 'directorist'),
+            'fields' =>  apply_filters( 'directorist_app_label_settings_fields', [
+                'app_signin_greetings_title',
+                'app_signin_greetings_subtitle',
+                'app_signup_greetings_title',
+                'app_signup_greetings_subtitle',
             ]),
         ];
 
