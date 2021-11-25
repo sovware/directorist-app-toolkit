@@ -20,7 +20,7 @@ trait Route_Helper {
     }
 
     public static function get_route_headers() {
-        $authorization_key = get_directorist_option('app_firebase_authorization_key', '', true);
+        // $authorization_key = get_directorist_option('app_firebase_authorization_key', '', true);
 
         return [
             'Content-Type' => 'application/json;charset=UTF-8',
