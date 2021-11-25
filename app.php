@@ -3,6 +3,7 @@
 include dirname( __FILE__ ) . '/vendor/autoload.php';
 
 use DirectoristAppToolkit\Helper\Traits;
+use DirectoristAppToolkit\Lib;
 use DirectoristAppToolkit\Controller;
 
 final class DirectoristAppToolkit {
@@ -44,6 +45,10 @@ final class DirectoristAppToolkit {
      */
     public static function get_controllers() {
         return [
+            // Libraries
+            Lib\JWT\Init::class,
+
+            // Controllers
             Controller\Notification\Init::class,
             Controller\Rest_API\Init::class,
             Controller\Admin_Settings\Init::class,

@@ -14,5 +14,7 @@
             "email": "contact@sovware.com"
         }
     ],
-    "require": {}
+    "require": {
+        "firebase/php-jwt": "^5.0.0"
+    }
 }

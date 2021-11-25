@@ -7,17 +7,25 @@ namespace Composer\Autoload;
 class ComposerStaticInit0a6c6705de6a2923ed3a492552062bc3
 {
     public static $files = array (
-        'ea039dfaf911f8fa51cd152bf6db9696' => __DIR__ . '/../..' . '/helpers/helper.php',
+        'a21e5240db73c2d137f8170129a25dce' => __DIR__ . '/../..' . '/helpers/helper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'F' => 
+        array (
+            'Firebase\\JWT\\' => 13,
+        ),
         'D' => 
         array (
-            'DirectoristAppToolkit\\' => 21,
+            'DirectoristAppToolkit\\' => 22,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Firebase\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
+        ),
         'DirectoristAppToolkit\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
