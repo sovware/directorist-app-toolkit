@@ -22,7 +22,7 @@ class Init {
      */
     public static function get_controllers() {
         return [
-            AppCustomizationSettings::class,
+            AppSettings::class,
         ];
     }
 }

@@ -4,7 +4,9 @@ namespace DirectoristAppToolkit\Controller\Notification\Helper;
 
 trait Route_Helper {
     public static function get_route( $document_id = '' ) {
-        return "https://firestore.googleapis.com/v1/projects/directorist-app/databases/(default)/documents/notifications/{$document_id}/notifications";
+        $project_id = get_directorist_option('app_firebase_project_id', '', true);
+
+        return "https://firestore.googleapis.com/v1/projects/{$project_id}/databases/(default)/documents/notifications/{$document_id}/notifications";
     }
 
     public static function get_route_args( $args ) {
@@ -18,9 +20,11 @@ trait Route_Helper {
     }
 
     public static function get_route_headers() {
+        $authorization_key = get_directorist_option('app_firebase_authorization_key', '', true);
+
         return [
             'Content-Type' => 'application/json;charset=UTF-8',
-                // 'Authorization' => 'key=AAAAK1QbsOQ:APA91bGjR5P97RhV3Pom-hOIDUMwrBBQ9Lv5frAYjeVaaqK90O8XO4pUKV8168DekBz-7ffllrJfbhibWh9C1RY00GIwIHrb0pCAk_nEAF3Qt4YLqi80XBBAqaDUADSfmVNuUEKP2VIu',
+                // 'Authorization' => "key={$authorization_key}",
         ];
     }
 

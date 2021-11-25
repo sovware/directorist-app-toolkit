@@ -3,7 +3,7 @@
 namespace DirectoristAppToolkit\Controller\Admin_Settings;
 
 
-class AppCustomizationSettings {
+class AppSettings {
 
     public function __construct() {
         add_action( 'atbdp_listing_type_settings_field_list', [ $this, 'add_menu_fields' ]);
@@ -12,6 +12,18 @@ class AppCustomizationSettings {
 
 
     public function add_menu_fields( $fields = [] ) {
+        // Firebase Credentials Fields
+        $fields['app_firebase_project_id'] = [
+            'label' => __('Project ID', 'directorist'),
+            'type'  => 'text',
+            'value' => '',
+        ];
+        $fields['app_firebase_authorization_key'] = [
+            'label' => __('Authorization Key', 'directorist'),
+            'type'  => 'text',
+            'value' => '',
+        ];
+        
         // Color Section Fields
         $fields['app_primary_color'] = [
             'label' => __('Primary Color', 'directorist'),
@@ -73,10 +85,19 @@ class AppCustomizationSettings {
 
     public function add_app_settings_menu_page( $layout = [] ) {
         // Settings Sections
-        $settings_sections = [];
+        $sections = [];
+
+        // Firebase Credentials
+        $sections['firebase_credentials'] = [
+            'title' => __('Firebase Credentials', 'directorist-app-toolkit'),
+            'fields' =>  apply_filters( 'directorist_app_firebase_credentials_fields', [
+                'app_firebase_project_id',
+                'app_firebase_authorization_key',
+            ]),
+        ];
 
         // Color Settings Section
-        $settings_sections['color_settings'] = [
+        $sections['color_settings'] = [
             'title' => __('Color Settings', 'directorist'),
             'fields' =>  apply_filters( 'directorist_app_color_settings_fields', [
                 'app_primary_color', 
@@ -85,7 +106,7 @@ class AppCustomizationSettings {
         ];
 
         // Banner Settings Section
-        $settings_sections['banner_settings'] = [
+        $sections['banner_settings'] = [
             'title' => __('Banner Settings', 'directorist'),
             'fields' =>  apply_filters( 'directorist_app_banner_settings_fields', [
                 'app_home_banner_title', 
@@ -94,7 +115,7 @@ class AppCustomizationSettings {
         ];
 
         // Label Settings Section
-        $settings_sections['label_settings'] = [
+        $sections['label_settings'] = [
             'title' => __('Label Settings', 'directorist'),
             'fields' =>  apply_filters( 'directorist_app_label_settings_fields', [
                 'app_signin_greetings_title',
@@ -105,19 +126,18 @@ class AppCustomizationSettings {
         ];
 
         // Other Settings Section
-        $settings_sections['other_settings'] = [
+        $sections['other_settings'] = [
             'title' => __('Other Settings', 'directorist'),
             'fields' =>  apply_filters( 'directorist_app_banner_settings_fields', [
                 'app_support_link',
             ]),
         ];
 
-
         // App Settings Menu Page
         $layout['directorist_app_settings'] = [
             'label'    => __('App Settings', 'directorist'),
             'icon'     => '<i class="fa fa-mobile"></i>',
-            'sections' => apply_filters( 'directorist_app_settings_sections', $settings_sections ),
+            'sections' => apply_filters( 'directorist_app_settings_sections', $sections ),
         ];
 
         return $layout;
