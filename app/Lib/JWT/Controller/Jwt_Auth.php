@@ -91,30 +91,6 @@ class Jwt_Auth
      */
     private function load_dependencies()
     {
-
-        // /**
-        //  * Load dependecies managed by composer.
-        //  */
-        // require_once plugin_dir_path(dirname(__FILE__)) . 'includes/vendor/autoload.php';
-
-        // /**
-        //  * The class responsible for orchestrating the actions and filters of the
-        //  * core plugin.
-        //  */
-        // require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-jwt-auth-loader.php';
-
-        // /**
-        //  * The class responsible for defining internationalization functionality
-        //  * of the plugin.
-        //  */
-        // require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-jwt-auth-i18n.php';
-
-        // /**
-        //  * The class responsible for defining all actions that occur in the public-facing
-        //  * side of the site.
-        //  */
-        // require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-jwt-auth-public.php';
-
         $this->loader = new Jwt_Auth_Loader();
     }
 
