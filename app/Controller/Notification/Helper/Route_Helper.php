@@ -29,7 +29,14 @@ trait Route_Helper {
     }
 
     public static function get_topic_id( $email = '' ) {
-        return join( '_', unpack( 'C*', $email ) );
+        $user = get_user_by( 'email', $email );
+        $user_id = 0;
+
+        if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
+            $user_id = $user->ID;
+        }
+        
+        return "user_{$user_id}";
     }
 
     public static function get_current_time() {
