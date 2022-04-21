@@ -111,6 +111,7 @@ class AppSettings {
             'fields' =>  apply_filters( 'directorist_app_banner_settings_fields', [
                 'app_home_banner_title', 
                 'app_home_banner_subtitle',
+                'app_home_banner_thumbnail',
             ]),
         ];
 
