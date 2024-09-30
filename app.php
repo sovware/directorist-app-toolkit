@@ -52,6 +52,7 @@ final class DirectoristAppToolkit {
             Controller\Notification\Init::class,
             Controller\Rest_API\Init::class,
             Controller\Admin_Settings\Init::class,
+            Controller\iFrame_Login\Init::class,
         ];
     }
 

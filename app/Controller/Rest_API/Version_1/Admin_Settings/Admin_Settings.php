@@ -21,8 +21,24 @@ class Admin_Settings extends Rest_Base {
 
 	protected $rest_base = 'admin-settings';
 
-	protected $publishable_setting_keys = [
-		'enable_multi_directory',
+	protected $available_settings = [
+		"app_primary_color",
+		"privacy_policy",
+		"terms_conditions",
+		"skip_plan_page",
+		"plan_direct_purchase",
+		"app_home_banner_title",
+		"app_home_banner_subtitle",
+		"app_home_banner_thumbnail",
+		"app_signin_greetings_title",
+		"app_signin_greetings_subtitle",
+		"app_signup_greetings_title",
+		"app_signup_greetings_subtitle",
+		"enable_multi_directory",
+		"app_support_link",
+		"radius_search_unit",
+		"admin_email_lists",
+		"payment_currency",
 	];
 
 	  /**
@@ -53,11 +69,11 @@ class Admin_Settings extends Rest_Base {
 		$_raw_settings = get_option('atbdp_option');
 		$settings      = [];
 
-		if ( ! is_array( $_raw_settings ) ) {
+		if ( empty( $_raw_settings ) || ! is_array( $_raw_settings ) ) {
 			return rest_ensure_response( $settings );
 		}
 
-		foreach ( $this->publishable_setting_keys as $setting_key ) {
+		foreach ( $this->available_settings as $setting_key ) {
 			if ( isset( $_raw_settings[ $setting_key ] ) ) {
 				$settings[ $setting_key ] = $_raw_settings[ $setting_key ];
 			}
