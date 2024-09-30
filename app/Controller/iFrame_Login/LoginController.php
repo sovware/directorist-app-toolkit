@@ -2,8 +2,8 @@
 
 namespace DirectoristAppToolkit\Controller\iFrame_Login;
 
+use Firebase\JWT\Key;
 use \Firebase\JWT\JWT;
-
 class LoginController {
 
 	public function __construct() {
@@ -12,6 +12,13 @@ class LoginController {
 
 	public function authenticate() {
 		if ( isset( $_GET['_dapp_token'] ) ) {
+			$query_args = array_intersect_key(
+				$_GET,
+				array(
+					'plan'           => 0
+				)
+			);
+
 			$token        = sanitize_text_field( $_GET['_dapp_token'] );
 			$user         = $this->validate_token( $token );
 			$redirect_url = home_url( '/' );
@@ -21,7 +28,7 @@ class LoginController {
 				$dashboard_page_id = (int) get_directorist_option( 'user_dashboard' );
 
 				if ( $checkout_page_id && ( $url = get_the_permalink( $checkout_page_id ) ) ) {
-					$redirect_url = $url;
+					$redirect_url = add_query_arg( $query_args, $url );
 				} elseif ( $dashboard_page_id && ( $url = get_the_permalink( $dashboard_page_id ) ) ) {
 					$redirect_url = $url;
 				}
@@ -42,7 +49,7 @@ class LoginController {
 		$secret_key = defined( 'JWT_AUTH_SECRET_KEY' ) ? JWT_AUTH_SECRET_KEY : false;
 	
 		try {
-			$decoded = JWT::decode( $token, $secret_key, array( 'HS256' ) );
+			$decoded = JWT::decode( $token, new Key( $secret_key, 'HS256' ) );
 			$user_id = $decoded->data->user->id;
 			$user    = get_user_by( 'ID', $user_id );
 	
