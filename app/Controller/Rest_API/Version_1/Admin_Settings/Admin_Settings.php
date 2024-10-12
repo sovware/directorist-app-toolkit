@@ -51,7 +51,7 @@ class Admin_Settings extends Rest_Base {
 				[
 					'methods'  => WP_REST_Server::READABLE,
 					'callback' => [ $this, 'get_items' ],
-					  // 'permission_callback' => [ $this, 'get_items_permissions_check' ],
+					'permission_callback' => '__return_true',
 					'args' => [],
 				],
 			]

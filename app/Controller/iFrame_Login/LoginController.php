@@ -15,9 +15,16 @@ class LoginController {
 			$query_args = array_intersect_key(
 				$_GET,
 				array(
-					'plan'           => 0
+					'directory_type'   => '',
+					'plan'             => 0,
+					'atbdp_listing_id' => 0,
+					'listing'          => 0,
 				)
 			);
+			
+			if ( ! empty( $query_args['listing'] ) ) {
+				$query_args['atbdp_listing_id'] = $query_args['listing'];
+			}
 
 			$token        = sanitize_text_field( $_GET['_dapp_token'] );
 			$user         = $this->validate_token( $token );
