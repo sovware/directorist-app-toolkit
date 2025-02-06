@@ -22,23 +22,26 @@ class Admin_Settings extends Rest_Base {
 	protected $rest_base = 'admin-settings';
 
 	protected $available_settings = [
-		"app_primary_color",
-		"privacy_policy",
-		"terms_conditions",
-		"skip_plan_page",
-		"plan_direct_purchase",
-		"app_home_banner_title",
-		"app_home_banner_subtitle",
-		"app_home_banner_thumbnail",
-		"app_signin_greetings_title",
-		"app_signin_greetings_subtitle",
-		"app_signup_greetings_title",
-		"app_signup_greetings_subtitle",
-		"enable_multi_directory",
-		"app_support_link",
-		"radius_search_unit",
-		"admin_email_lists",
-		"payment_currency",
+		'app_primary_color',
+		'privacy_policy',
+		'terms_conditions',
+		'skip_plan_page',
+		'plan_direct_purchase',
+		'app_home_banner_title',
+		'app_home_banner_subtitle',
+		'app_home_banner_thumbnail',
+		'app_signin_greetings_title',
+		'app_signin_greetings_subtitle',
+		'app_signup_greetings_title',
+		'app_signup_greetings_subtitle',
+		'enable_multi_directory',
+		'app_support_link',
+		'radius_search_unit',
+		'admin_email_lists',
+		'payment_currency',
+		'payment_thousand_separator',
+		'payment_decimal_separator',
+		'payment_currency_position',
 	];
 
 	  /**
@@ -79,6 +82,10 @@ class Admin_Settings extends Rest_Base {
 			}
 		}
 
+		if ( $settings['payment_currency'] !== '' ) {
+			$settings['payment_currency_symbol'] = html_entity_decode( atbdp_currency_symbol( $settings['payment_currency'] ) );
+		}
+		
 		return rest_ensure_response( $settings );
 	}
 }
