@@ -50,6 +50,8 @@ class ComposerStaticInit0a6c6705de6a2923ed3a492552062bc3
         'DirectoristAppToolkit\\Controller\\Rest_API\\Version_1\\Users\\Init' => __DIR__ . '/../..' . '/app/Controller/Rest_API/Version_1/Users/Init.php',
         'DirectoristAppToolkit\\Controller\\Rest_API\\Version_1\\Users\\User_Meta' => __DIR__ . '/../..' . '/app/Controller/Rest_API/Version_1/Users/User_Meta.php',
         'DirectoristAppToolkit\\Controller\\Rest_API\\Version_1\\Users\\User_Rest_Base' => __DIR__ . '/../..' . '/app/Controller/Rest_API/Version_1/Users/User_Rest_Base.php',
+        'DirectoristAppToolkit\\Controller\\iFrame_Login\\Init' => __DIR__ . '/../..' . '/app/Controller/iFrame_Login/Init.php',
+        'DirectoristAppToolkit\\Controller\\iFrame_Login\\LoginController' => __DIR__ . '/../..' . '/app/Controller/iFrame_Login/LoginController.php',
         'DirectoristAppToolkit\\Helper\\Traits\\Rest_Route_Registrar' => __DIR__ . '/../..' . '/app/Helper/Traits/Rest_Route_Registrar.php',
         'DirectoristAppToolkit\\Helper\\Traits\\Service_Registrar' => __DIR__ . '/../..' . '/app/Helper/Traits/Service_Registrar.php',
         'DirectoristAppToolkit\\Lib\\JWT\\Controller\\Jwt_Auth' => __DIR__ . '/../..' . '/app/Lib/JWT/Controller/Jwt_Auth.php',

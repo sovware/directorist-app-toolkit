@@ -23,6 +23,8 @@ return array(
     'DirectoristAppToolkit\\Controller\\Rest_API\\Version_1\\Users\\Init' => $baseDir . '/app/Controller/Rest_API/Version_1/Users/Init.php',
     'DirectoristAppToolkit\\Controller\\Rest_API\\Version_1\\Users\\User_Meta' => $baseDir . '/app/Controller/Rest_API/Version_1/Users/User_Meta.php',
     'DirectoristAppToolkit\\Controller\\Rest_API\\Version_1\\Users\\User_Rest_Base' => $baseDir . '/app/Controller/Rest_API/Version_1/Users/User_Rest_Base.php',
+    'DirectoristAppToolkit\\Controller\\iFrame_Login\\Init' => $baseDir . '/app/Controller/iFrame_Login/Init.php',
+    'DirectoristAppToolkit\\Controller\\iFrame_Login\\LoginController' => $baseDir . '/app/Controller/iFrame_Login/LoginController.php',
     'DirectoristAppToolkit\\Helper\\Traits\\Rest_Route_Registrar' => $baseDir . '/app/Helper/Traits/Rest_Route_Registrar.php',
     'DirectoristAppToolkit\\Helper\\Traits\\Service_Registrar' => $baseDir . '/app/Helper/Traits/Service_Registrar.php',
     'DirectoristAppToolkit\\Lib\\JWT\\Controller\\Jwt_Auth' => $baseDir . '/app/Lib/JWT/Controller/Jwt_Auth.php',
