@@ -22,26 +22,30 @@ class Admin_Settings extends Rest_Base {
 	protected $rest_base = 'admin-settings';
 
 	protected $available_settings = [
-		'app_primary_color',
-		'privacy_policy',
-		'terms_conditions',
-		'skip_plan_page',
-		'plan_direct_purchase',
-		'app_home_banner_title',
-		'app_home_banner_subtitle',
-		'app_home_banner_thumbnail',
-		'app_signin_greetings_title',
-		'app_signin_greetings_subtitle',
-		'app_signup_greetings_title',
-		'app_signup_greetings_subtitle',
-		'enable_multi_directory',
-		'app_support_link',
-		'radius_search_unit',
-		'admin_email_lists',
-		'payment_currency',
-		'payment_thousand_separator',
-		'payment_decimal_separator',
-		'payment_currency_position',
+		'app_primary_color'             => null,
+		'app_home_banner_title'         => null,
+		'app_home_banner_subtitle'      => null,
+		'app_home_banner_thumbnail'     => null,
+		'app_signin_greetings_title'    => null,
+		'app_signin_greetings_subtitle' => null,
+		'app_signup_greetings_title'    => null,
+		'app_signup_greetings_subtitle' => null,
+		'app_support_link'              => null,
+		'enable_multi_directory'        => null,
+		'radius_search_unit'            => null,
+		'admin_email_lists'             => null,
+		'privacy_policy'                => null,
+		'terms_conditions'              => null,
+		'skip_plan_page'                => null,
+		'plan_direct_purchase'          => null,
+		'payment_currency'              => null,
+		'payment_thousand_separator'    => null,
+		'payment_decimal_separator'     => null,
+		'payment_currency_position'     => null,
+		'payment_currency_symbol'       => null,
+		'g_currency'                    => 'listing_currency',
+		'g_currency_position'           => 'listing_currency_position',
+		'listing_currency_symbol'       => null,
 	];
 
 	  /**
@@ -76,14 +80,22 @@ class Admin_Settings extends Rest_Base {
 			return rest_ensure_response( $settings );
 		}
 
-		foreach ( $this->available_settings as $setting_key ) {
+		foreach ( $this->available_settings as $setting_key => $rest_key ) {
+			$rest_key = is_null( $rest_key ) ? $setting_key : $rest_key;
+
 			if ( isset( $_raw_settings[ $setting_key ] ) ) {
-				$settings[ $setting_key ] = $_raw_settings[ $setting_key ];
+				$settings[ $rest_key ] = $_raw_settings[ $setting_key ];
+			} else {
+				$settings[ $rest_key ] = null;
 			}
 		}
 
 		if ( $settings['payment_currency'] !== '' ) {
 			$settings['payment_currency_symbol'] = html_entity_decode( atbdp_currency_symbol( $settings['payment_currency'] ) );
+		}
+
+		if ( $settings['listing_currency'] !== '' ) {
+			$settings['listing_currency_symbol'] = html_entity_decode( atbdp_currency_symbol( $settings['listing_currency'] ) );
 		}
 		
 		return rest_ensure_response( $settings );
