@@ -100,8 +100,7 @@ class AppSettings {
         $sections['color_settings'] = [
             'title' => __('Color Settings', 'directorist'),
             'fields' =>  apply_filters( 'directorist_app_color_settings_fields', [
-                'app_primary_color', 
-                'app_accent_color'
+                'app_primary_color',
             ]),
         ];
 
