@@ -46,7 +46,7 @@ final class DirectoristAppToolkit {
     public static function get_controllers() {
         return [
             // Libraries
-            Lib\JWT\Init::class,
+            //Lib\JWT\Init::class,
 
             // Controllers
             Controller\Notification\Init::class,
