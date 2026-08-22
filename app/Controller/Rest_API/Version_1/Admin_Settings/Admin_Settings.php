@@ -3,12 +3,13 @@
  * Rest Admin Settings Controller
  *
  * @package DirectoristAppToolkit\Controller\Rest_API\Version_1
- * @version  1.0.0
+ * @version  2.0.0
  */
 
 namespace DirectoristAppToolkit\Controller\Rest_API\Version_1\Admin_Settings;
 
 use DirectoristAppToolkit\Controller\Rest_API\Version_1\Helper\Rest_Base;
+use DirectoristAppToolkit\Helper\App_Settings as Settings_Helper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,16 +22,7 @@ class Admin_Settings extends Rest_Base {
 
 	protected $rest_base = 'admin-settings';
 
-	protected $available_settings = [
-		'app_primary_color'             => null,
-		'app_home_banner_title'         => null,
-		'app_home_banner_subtitle'      => null,
-		'app_home_banner_thumbnail'     => null,
-		'app_signin_greetings_title'    => null,
-		'app_signin_greetings_subtitle' => null,
-		'app_signup_greetings_title'    => null,
-		'app_signup_greetings_subtitle' => null,
-		'app_support_link'              => null,
+	protected $legacy_settings = [
 		'enable_multi_directory'        => null,
 		'radius_search_unit'            => null,
 		'admin_email_lists'             => null,
@@ -47,6 +39,33 @@ class Admin_Settings extends Rest_Base {
 		'g_currency_position'           => 'listing_currency_position',
 		'listing_currency_symbol'       => null,
 	];
+
+	/**
+	 * Get all settings that should be returned by the admin settings API.
+	 *
+	 * This keeps the API aligned with the admin settings schema automatically.
+	 *
+	 * @return array
+	 */
+	protected function get_available_settings() {
+		$settings = [];
+
+		foreach ( Settings_Helper::get_tabs() as $tab ) {
+			if ( empty( $tab['fields'] ) || ! is_array( $tab['fields'] ) ) {
+				continue;
+			}
+
+			foreach ( $tab['fields'] as $field_key => $field ) {
+				if ( Settings_Helper::is_section_field( $field ) ) {
+					continue;
+				}
+
+				$settings[ $field_key ] = null;
+			}
+		}
+
+		return array_merge( $settings, $this->legacy_settings );
+	}
 
 	  /**
 	 * Register the routes
@@ -76,14 +95,16 @@ class Admin_Settings extends Rest_Base {
 		$_raw_settings = get_option('atbdp_option');
 		$settings      = [];
 
-		if ( empty( $_raw_settings ) || ! is_array( $_raw_settings ) ) {
-			return rest_ensure_response( $settings );
+		if ( ! is_array( $_raw_settings ) ) {
+			$_raw_settings = [];
 		}
 
-		foreach ( $this->available_settings as $setting_key => $rest_key ) {
+		foreach ( $this->get_available_settings() as $setting_key => $rest_key ) {
 			$rest_key = is_null( $rest_key ) ? $setting_key : $rest_key;
 
-			if ( isset( $_raw_settings[ $setting_key ] ) ) {
+			if ( Settings_Helper::has_field( $setting_key ) ) {
+				$settings[ $rest_key ] = Settings_Helper::get_rest_setting( $setting_key );
+			} elseif ( isset( $_raw_settings[ $setting_key ] ) ) {
 				$settings[ $rest_key ] = $_raw_settings[ $setting_key ];
 			} else {
 				$settings[ $rest_key ] = null;
