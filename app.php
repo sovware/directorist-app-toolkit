@@ -53,6 +53,7 @@ final class DirectoristAppToolkit {
             Controller\Rest_API\Init::class,
             Controller\Admin_Settings\Init::class,
             Controller\iFrame_Login\Init::class,
+            Controller\Licensing\Init::class,
         ];
     }
 
