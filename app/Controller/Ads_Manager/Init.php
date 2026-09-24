@@ -33,9 +33,9 @@ class Init {
         }
 
         $options = array(
+            'all'    => __( 'All', 'directorist-app-toolkit' ),
             'web'    => __( 'Web', 'directorist-app-toolkit' ),
             'mobile' => __( 'Mobile', 'directorist-app-toolkit' ),
-            'all'    => __( 'All', 'directorist-app-toolkit' ),
         );
         ?>
         <div class="swbdpam-ad-type-content-wrapper">
