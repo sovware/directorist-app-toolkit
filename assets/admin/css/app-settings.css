@@ -274,13 +274,16 @@
     position: absolute;
     top: 8px;
     right: 8px;
+    box-sizing: border-box;
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    min-width: 32px;
-    height: 32px;
+    width: 28px;
+    min-width: 28px;
+    height: 28px;
+    min-height: 28px;
     padding: 0 !important;
+    line-height: 1;
     z-index: 1;
 }
 
