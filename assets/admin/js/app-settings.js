@@ -147,9 +147,7 @@ jQuery(function ($) {
             'aria-label': label,
             'title': label
         });
-        $button.find('.dashicons')
-            .toggleClass('dashicons-visibility', isVisible)
-            .toggleClass('dashicons-hidden', !isVisible);
+        $button.toggleClass('is-visible', !isVisible);
     });
 
     $page.on('click', '.directorist-app-toolkit-copy-snippet', function () {

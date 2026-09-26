@@ -412,7 +412,15 @@ class AppSettings {
                             aria-label="<?php esc_attr_e( 'Show provision key', 'directorist-app-toolkit' ); ?>"
                             title="<?php esc_attr_e( 'Show provision key', 'directorist-app-toolkit' ); ?>"
                         >
-                            <span class="dashicons dashicons-visibility" aria-hidden="true"></span>
+                            <svg class="directorist-app-toolkit-eye-icon directorist-app-toolkit-eye-icon--show" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <svg class="directorist-app-toolkit-eye-icon directorist-app-toolkit-eye-icon--hide" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M3 3l18 18"></path>
+                            </svg>
                         </button>
                     <?php endif; ?>
                 </div>

@@ -367,11 +367,40 @@
     width: 100%;
 }
 
-.directorist-app-toolkit-toggle-secret {
+.directorist-app-toolkit-settings .directorist-app-toolkit-provision-value > .directorist-app-toolkit-toggle-secret {
+    box-sizing: border-box;
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    min-width: 36px;
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    margin: 0;
+    padding: 0 !important;
+    line-height: 1 !important;
+    flex: 0 0 40px;
+}
+
+.directorist-app-toolkit-eye-icon {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.directorist-app-toolkit-eye-icon--hide,
+.directorist-app-toolkit-toggle-secret.is-visible .directorist-app-toolkit-eye-icon--show {
+    display: none;
+}
+
+.directorist-app-toolkit-toggle-secret.is-visible .directorist-app-toolkit-eye-icon--hide {
+    display: block;
 }
 
 .directorist-app-toolkit-provision-item__empty {
