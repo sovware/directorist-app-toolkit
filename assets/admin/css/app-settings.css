@@ -246,33 +246,59 @@
 }
 
 .directorist-app-toolkit-code-snippet {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    position: relative;
 }
 
 .directorist-app-toolkit-code-snippet pre {
-    flex: 1 1 auto;
+    box-sizing: border-box;
+    width: 100%;
     margin: 0;
-    padding: 14px;
+    padding: 14px 52px 14px 14px;
     border: 1px solid #c3c4c7;
     border-radius: 4px;
     background: #f6f7f7;
     overflow: auto;
 }
 
+.directorist-app-toolkit-code-snippet code {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    white-space: pre;
+    text-align: left;
+    line-height: 1.6;
+}
+
 .directorist-app-toolkit-copy-snippet {
+    position: absolute;
+    top: 8px;
+    right: 8px;
     display: inline-flex !important;
     align-items: center;
-    gap: 5px;
-    flex: 0 0 auto;
+    justify-content: center;
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 !important;
+    z-index: 1;
+}
+
+.directorist-app-toolkit-copy-snippet .dashicons {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    line-height: 18px;
 }
 
 .directorist-app-toolkit-copy-feedback {
-    min-height: 20px;
     margin: 8px 0 0;
     color: #007017;
     font-weight: 600;
+}
+
+.directorist-app-toolkit-copy-feedback:empty {
+    display: none;
 }
 
 .directorist-app-toolkit-copy-feedback.is-error {
@@ -390,8 +416,7 @@
         justify-content: flex-end;
     }
 
-    .directorist-app-toolkit-provision .directorist-app-toolkit-card__header,
-    .directorist-app-toolkit-code-snippet {
+    .directorist-app-toolkit-provision .directorist-app-toolkit-card__header {
         align-items: stretch;
         flex-direction: column;
     }

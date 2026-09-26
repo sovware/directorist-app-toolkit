@@ -336,9 +336,14 @@ class AppSettings {
                             </p>
                             <div class="directorist-app-toolkit-code-snippet">
                                 <pre><code><?php echo esc_html( $snippet ); ?></code></pre>
-                                <button type="button" class="button directorist-app-toolkit-copy-snippet">
+                                <button
+                                    type="button"
+                                    class="button directorist-app-toolkit-copy-snippet"
+                                    aria-label="<?php esc_attr_e( 'Copy to clipboard', 'directorist-app-toolkit' ); ?>"
+                                    title="<?php esc_attr_e( 'Copy to clipboard', 'directorist-app-toolkit' ); ?>"
+                                >
                                     <span class="dashicons dashicons-clipboard" aria-hidden="true"></span>
-                                    <span class="directorist-app-toolkit-copy-snippet__label"><?php esc_html_e( 'Copy to clipboard', 'directorist-app-toolkit' ); ?></span>
+                                    <span class="screen-reader-text"><?php esc_html_e( 'Copy to clipboard', 'directorist-app-toolkit' ); ?></span>
                                 </button>
                             </div>
                             <p class="directorist-app-toolkit-copy-feedback" aria-live="polite"></p>
