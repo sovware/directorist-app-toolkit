@@ -62,6 +62,13 @@ class App_Settings {
                     ],
                 ],
             ],
+            'provision'  => [
+                'label'       => __( 'Provision', 'directorist-app-toolkit' ),
+                'description' => __( 'Configure secure administrator provisioning for the mobile app.', 'directorist-app-toolkit' ),
+                'type'        => 'provision',
+                'option_key'  => null,
+                'fields'      => [],
+            ],
             'appearance' => [
                 'label'       => __( 'Branding', 'directorist-app-toolkit' ),
                 'description' => __( 'Define the colors, logo, icon, and typography used by the mobile app.', 'directorist-app-toolkit' ),
@@ -407,7 +414,7 @@ class App_Settings {
     public static function get_tab_values( $tab_key ) {
         $tab = self::get_tab( $tab_key );
 
-        if ( empty( $tab ) ) {
+        if ( empty( $tab ) || empty( $tab['option_key'] ) || empty( $tab['fields'] ) ) {
             return [];
         }
 

@@ -133,6 +133,64 @@ jQuery(function ($) {
         bindMediaField($(this));
     });
 
+    $page.on('click', '.directorist-app-toolkit-toggle-secret', function () {
+        var $button = $(this);
+        var $input = $('#' + $button.attr('aria-controls'));
+        var isVisible = $input.attr('type') === 'text';
+        var label = isVisible
+            ? (config.i18n && config.i18n.showKey ? config.i18n.showKey : 'Show provision key')
+            : (config.i18n && config.i18n.hideKey ? config.i18n.hideKey : 'Hide provision key');
+
+        $input.attr('type', isVisible ? 'password' : 'text');
+        $button.attr({
+            'aria-pressed': isVisible ? 'false' : 'true',
+            'aria-label': label,
+            'title': label
+        });
+        $button.find('.dashicons')
+            .toggleClass('dashicons-visibility', isVisible)
+            .toggleClass('dashicons-hidden', !isVisible);
+    });
+
+    $page.on('click', '.directorist-app-toolkit-copy-snippet', function () {
+        var $button = $(this);
+        var $container = $button.closest('.directorist-app-toolkit-provision__instructions');
+        var text = $container.find('pre code').text();
+        var $feedback = $container.find('.directorist-app-toolkit-copy-feedback');
+        var copiedMessage = config.i18n && config.i18n.copied ? config.i18n.copied : 'Copied!';
+        var failedMessage = config.i18n && config.i18n.copyFailed ? config.i18n.copyFailed : 'Unable to copy. Select the snippet and copy it manually.';
+
+        function showCopyResult(success) {
+            $feedback
+                .toggleClass('is-error', !success)
+                .text(success ? copiedMessage : failedMessage);
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(function () {
+                showCopyResult(true);
+            }).catch(function () {
+                showCopyResult(false);
+            });
+            return;
+        }
+
+        var $temporary = $('<textarea />').val(text).attr('readonly', true).css({
+            position: 'fixed',
+            opacity: 0
+        }).appendTo('body');
+
+        $temporary[0].select();
+
+        try {
+            showCopyResult(document.execCommand('copy'));
+        } catch (error) {
+            showCopyResult(false);
+        }
+
+        $temporary.remove();
+    });
+
     $tabLinks.on('click', function (event) {
         event.preventDefault();
         activateTab($(this).data('tab'));

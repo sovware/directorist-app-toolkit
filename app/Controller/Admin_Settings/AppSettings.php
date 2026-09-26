@@ -3,6 +3,7 @@
 namespace DirectoristAppToolkit\Controller\Admin_Settings;
 
 use DirectoristAppToolkit\Helper\App_Settings as Settings_Helper;
+use DirectoristAppToolkit\Helper\Provision;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -49,13 +50,14 @@ class AppSettings {
             wp_die( esc_html__( 'You do not have permission to access this page.', 'directorist-app-toolkit' ) );
         }
 
-        $tabs       = Settings_Helper::get_tabs();
-        $active_tab = $this->get_active_tab( $tabs );
+        $tabs             = Settings_Helper::get_tabs();
+        $active_tab       = $this->get_active_tab( $tabs );
+        $provision_status = Provision::get_status();
         ?>
         <div class="wrap directorist-app-toolkit-settings">
             <h1><?php esc_html_e( 'App Settings', 'directorist-app-toolkit' ); ?></h1>
             <p class="directorist-app-toolkit-settings__intro">
-                <?php esc_html_e( 'Manage app-specific settings in dedicated tabs. Each tab saves independently and falls back to your legacy Directorist values when no new value exists yet.', 'directorist-app-toolkit' ); ?>
+                <?php esc_html_e( 'Manage app-specific settings and administrator provisioning in dedicated tabs. Editable tabs save independently and fall back to legacy Directorist values when no new value exists yet.', 'directorist-app-toolkit' ); ?>
             </p>
 
             <nav class="nav-tab-wrapper directorist-app-toolkit-settings__tabs" aria-label="<?php esc_attr_e( 'App settings tabs', 'directorist-app-toolkit' ); ?>">
@@ -66,6 +68,13 @@ class AppSettings {
                         data-tab="<?php echo esc_attr( $tab_key ); ?>"
                     >
                         <?php echo esc_html( $tab['label'] ); ?>
+                        <?php if ( 'provision' === $tab_key && ! $provision_status['configured'] ) : ?>
+                            <span
+                                class="dashicons dashicons-warning directorist-app-toolkit-tab-error"
+                                aria-hidden="true"
+                            ></span>
+                            <span class="screen-reader-text"><?php esc_html_e( 'Provisioning is not configured correctly.', 'directorist-app-toolkit' ); ?></span>
+                        <?php endif; ?>
                     </a>
                 <?php endforeach; ?>
             </nav>
@@ -123,6 +132,10 @@ class AppSettings {
                     'useImage'        => __( 'Use Image', 'directorist-app-toolkit' ),
                     'genericError'    => __( 'Something went wrong. Please try again.', 'directorist-app-toolkit' ),
                     'removedPreview'  => __( 'Preview removed', 'directorist-app-toolkit' ),
+                    'copied'          => __( 'Copied!', 'directorist-app-toolkit' ),
+                    'copyFailed'      => __( 'Unable to copy. Select the snippet and copy it manually.', 'directorist-app-toolkit' ),
+                    'showKey'         => __( 'Show provision key', 'directorist-app-toolkit' ),
+                    'hideKey'         => __( 'Hide provision key', 'directorist-app-toolkit' ),
                 ],
             ]
         );
@@ -198,6 +211,11 @@ class AppSettings {
      * @return void
      */
     protected function render_tab_panel( $tab_key, $tab, $is_active ) {
+        if ( ! empty( $tab['type'] ) && 'provision' === $tab['type'] ) {
+            $this->render_provision_tab_panel( $tab_key, $tab, $is_active );
+            return;
+        }
+
         $values = Settings_Helper::get_tab_values( $tab_key );
         ?>
         <section
@@ -246,6 +264,161 @@ class AppSettings {
                 </div>
             </form>
         </section>
+        <?php
+    }
+
+    /**
+     * Render the read-only administrator provision configuration panel.
+     *
+     * @param string $tab_key   Tab key.
+     * @param array  $tab       Tab config.
+     * @param bool   $is_active Active state.
+     *
+     * @return void
+     */
+    protected function render_provision_tab_panel( $tab_key, $tab, $is_active ) {
+        $status          = Provision::get_status();
+        $key_status      = $status['items']['provision_key'];
+        $username_status = $status['items']['username'];
+        $missing         = [];
+
+        if ( ! $key_status['defined'] ) {
+            $missing[] = sprintf(
+                "define( '%s', '%s' );",
+                Provision::KEY_CONSTANT,
+                Provision::generate_example_key()
+            );
+        }
+
+        if ( ! $username_status['defined'] ) {
+            $default_username = Provision::get_default_username();
+            $missing[] = sprintf(
+                "define( '%s', '%s' );",
+                Provision::USERNAME_CONSTANT,
+                $default_username ? addslashes( $default_username ) : 'administrator_username'
+            );
+        }
+
+        $snippet = implode( "\n", $missing );
+        ?>
+        <section
+            class="directorist-app-toolkit-tab-panel<?php echo $is_active ? ' is-active' : ''; ?>"
+            data-tab-panel="<?php echo esc_attr( $tab_key ); ?>"
+        >
+            <div class="directorist-app-toolkit-card directorist-app-toolkit-provision">
+                <div class="directorist-app-toolkit-card__header">
+                    <div>
+                        <h2><?php echo esc_html( $tab['label'] ); ?></h2>
+                        <p><?php echo esc_html( $tab['description'] ); ?></p>
+                    </div>
+                    <span class="directorist-app-toolkit-provision__status <?php echo $status['configured'] ? 'is-valid' : 'is-invalid'; ?>">
+                        <span class="dashicons <?php echo $status['configured'] ? 'dashicons-yes-alt' : 'dashicons-warning'; ?>" aria-hidden="true"></span>
+                        <?php echo $status['configured'] ? esc_html__( 'Configured', 'directorist-app-toolkit' ) : esc_html__( 'Action required', 'directorist-app-toolkit' ); ?>
+                    </span>
+                </div>
+
+                <div class="directorist-app-toolkit-provision__content">
+                    <div class="directorist-app-toolkit-provision__explanation">
+                        <h3><?php esc_html_e( 'Why this is required', 'directorist-app-toolkit' ); ?></h3>
+                        <p>
+                            <?php esc_html_e( 'The mobile app needs an administrator JWT to perform protected management tasks. The provision key proves that the token request comes from an authorized app, while the configured username determines which administrator account and permissions the token receives.', 'directorist-app-toolkit' ); ?>
+                        </p>
+                        <p>
+                            <?php esc_html_e( 'These values are defined in wp-config.php so they are not stored in the WordPress database or returned by the public app-settings API. Keep the provision key private and only send it over HTTPS.', 'directorist-app-toolkit' ); ?>
+                        </p>
+                    </div>
+
+                    <?php if ( $snippet ) : ?>
+                        <div class="directorist-app-toolkit-provision__instructions notice notice-info inline">
+                            <h3><?php esc_html_e( 'Configure administrator provisioning', 'directorist-app-toolkit' ); ?></h3>
+                            <p>
+                                <?php esc_html_e( 'Copy the following code into your site’s wp-config.php file before the “That’s all, stop editing!” line, then reload this page.', 'directorist-app-toolkit' ); ?>
+                            </p>
+                            <div class="directorist-app-toolkit-code-snippet">
+                                <pre><code><?php echo esc_html( $snippet ); ?></code></pre>
+                                <button type="button" class="button directorist-app-toolkit-copy-snippet">
+                                    <span class="dashicons dashicons-clipboard" aria-hidden="true"></span>
+                                    <span class="directorist-app-toolkit-copy-snippet__label"><?php esc_html_e( 'Copy to clipboard', 'directorist-app-toolkit' ); ?></span>
+                                </button>
+                            </div>
+                            <p class="directorist-app-toolkit-copy-feedback" aria-live="polite"></p>
+                        </div>
+                    <?php elseif ( ! $status['configured'] ) : ?>
+                        <div class="notice notice-error inline directorist-app-toolkit-provision__instructions">
+                            <p><?php esc_html_e( 'Correct the invalid constant values in wp-config.php, then reload this page.', 'directorist-app-toolkit' ); ?></p>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="directorist-app-toolkit-provision__items">
+                        <?php $this->render_provision_status_item( __( 'Provision key', 'directorist-app-toolkit' ), $key_status, true ); ?>
+                        <?php $this->render_provision_status_item( __( 'Administrator username', 'directorist-app-toolkit' ), $username_status, false ); ?>
+                    </div>
+
+                    <?php if ( $status['configured'] ) : ?>
+                        <div class="directorist-app-toolkit-provision__endpoint">
+                            <h3><?php esc_html_e( 'Token endpoint', 'directorist-app-toolkit' ); ?></h3>
+                            <code><?php echo esc_html( rest_url( 'directorist-app-toolkit/v1/provision/token' ) ); ?></code>
+                            <p><?php esc_html_e( 'Send the provision key as provision_key in a POST JSON body. Use the returned token as a Bearer token for administrative REST requests.', 'directorist-app-toolkit' ); ?></p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </section>
+        <?php
+    }
+
+    /**
+     * Render one provision configuration status item.
+     *
+     * @param string $label   Item label.
+     * @param array  $item    Item status.
+     * @param bool   $is_key  Whether this item contains the secret key.
+     *
+     * @return void
+     */
+    protected function render_provision_status_item( $label, $item, $is_key ) {
+        $field_id = 'directorist-app-toolkit-provision-' . ( $is_key ? 'key' : 'username' );
+        ?>
+        <div class="directorist-app-toolkit-provision-item <?php echo $item['valid'] ? 'is-valid' : 'is-invalid'; ?>">
+            <div class="directorist-app-toolkit-provision-item__heading">
+                <h3><?php echo esc_html( $label ); ?></h3>
+                <span class="dashicons <?php echo $item['valid'] ? 'dashicons-yes-alt' : 'dashicons-dismiss'; ?>" aria-hidden="true"></span>
+            </div>
+
+            <?php if ( $item['defined'] ) : ?>
+                <div class="directorist-app-toolkit-provision-value">
+                    <input
+                        id="<?php echo esc_attr( $field_id ); ?>"
+                        class="regular-text code"
+                        type="<?php echo $is_key ? 'password' : 'text'; ?>"
+                        value="<?php echo esc_attr( $item['value'] ); ?>"
+                        readonly
+                        autocomplete="off"
+                    >
+                    <?php if ( $is_key ) : ?>
+                        <button
+                            type="button"
+                            class="button directorist-app-toolkit-toggle-secret"
+                            aria-controls="<?php echo esc_attr( $field_id ); ?>"
+                            aria-pressed="false"
+                            aria-label="<?php esc_attr_e( 'Show provision key', 'directorist-app-toolkit' ); ?>"
+                            title="<?php esc_attr_e( 'Show provision key', 'directorist-app-toolkit' ); ?>"
+                        >
+                            <span class="dashicons dashicons-visibility" aria-hidden="true"></span>
+                        </button>
+                    <?php endif; ?>
+                </div>
+            <?php else : ?>
+                <p class="directorist-app-toolkit-provision-item__empty"><?php esc_html_e( 'Not defined', 'directorist-app-toolkit' ); ?></p>
+            <?php endif; ?>
+
+            <?php if ( ! $item['valid'] ) : ?>
+                <p class="directorist-app-toolkit-provision-item__error">
+                    <span class="dashicons dashicons-warning" aria-hidden="true"></span>
+                    <?php echo esc_html( $item['error'] ); ?>
+                </p>
+            <?php endif; ?>
+        </div>
         <?php
     }
 
