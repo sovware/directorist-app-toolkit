@@ -284,11 +284,14 @@
     z-index: 1;
 }
 
-.directorist-app-toolkit-copy-snippet .dashicons {
+.directorist-app-toolkit-copy-snippet svg {
     width: 18px;
     height: 18px;
-    font-size: 18px;
-    line-height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .directorist-app-toolkit-copy-feedback {
