@@ -30,6 +30,7 @@ class Init {
     public static function get_controllers() {
         return [
             JWT_Setup::class,
+            Provision_Token::class,
         ];
     }
 }

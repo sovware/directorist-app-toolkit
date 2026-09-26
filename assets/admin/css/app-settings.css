@@ -12,6 +12,16 @@
     margin-bottom: 18px;
 }
 
+.directorist-app-toolkit-tab-error {
+    width: 16px;
+    height: 16px;
+    margin: 1px 0 0 4px;
+    color: #d63638;
+    font-size: 16px;
+    line-height: 16px;
+    vertical-align: text-top;
+}
+
 .directorist-app-toolkit-tab-panel {
     display: none;
 }
@@ -187,6 +197,242 @@
     display: block;
 }
 
+.directorist-app-toolkit-provision .directorist-app-toolkit-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.directorist-app-toolkit-provision__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.directorist-app-toolkit-provision__status.is-valid {
+    color: #007017;
+    background: #edfaef;
+}
+
+.directorist-app-toolkit-provision__status.is-invalid {
+    color: #8a2424;
+    background: #fcf0f1;
+}
+
+.directorist-app-toolkit-provision__content {
+    padding: 24px;
+}
+
+.directorist-app-toolkit-provision__explanation {
+    max-width: 820px;
+}
+
+.directorist-app-toolkit-provision__explanation h3,
+.directorist-app-toolkit-provision__instructions h3,
+.directorist-app-toolkit-provision__endpoint h3 {
+    margin-top: 0;
+}
+
+.directorist-app-toolkit-provision__instructions {
+    margin: 24px 0;
+    padding: 16px;
+}
+
+.directorist-app-toolkit-code-snippet {
+    position: relative;
+}
+
+.directorist-app-toolkit-code-snippet pre {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: 14px 52px 14px 14px;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    background: #f6f7f7;
+    overflow: auto;
+}
+
+.directorist-app-toolkit-code-snippet code {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    white-space: pre;
+    text-align: left;
+    line-height: 1.6;
+}
+
+.directorist-app-toolkit-settings .directorist-app-toolkit-code-snippet > .directorist-app-toolkit-copy-snippet {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    box-sizing: border-box;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 28px !important;
+    min-width: 28px !important;
+    max-width: 28px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
+    margin: 0;
+    padding: 0 !important;
+    line-height: 1 !important;
+    flex: 0 0 28px;
+    z-index: 1;
+}
+
+.directorist-app-toolkit-copy-snippet svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.directorist-app-toolkit-copy-feedback {
+    margin: 8px 0 0;
+    color: #007017;
+    font-weight: 600;
+}
+
+.directorist-app-toolkit-copy-feedback:empty {
+    display: none;
+}
+
+.directorist-app-toolkit-copy-feedback.is-error {
+    color: #d63638;
+}
+
+.directorist-app-toolkit-provision__items {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.directorist-app-toolkit-provision-item {
+    padding: 18px;
+    border: 1px solid #dcdcde;
+    border-left-width: 4px;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.directorist-app-toolkit-provision-item.is-valid {
+    border-left-color: #00a32a;
+}
+
+.directorist-app-toolkit-provision-item.is-invalid {
+    border-left-color: #d63638;
+}
+
+.directorist-app-toolkit-provision-item__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.directorist-app-toolkit-provision-item__heading h3 {
+    margin: 0 0 12px;
+}
+
+.directorist-app-toolkit-provision-item.is-valid .directorist-app-toolkit-provision-item__heading .dashicons {
+    color: #00a32a;
+}
+
+.directorist-app-toolkit-provision-item.is-invalid .directorist-app-toolkit-provision-item__heading .dashicons {
+    color: #d63638;
+}
+
+.directorist-app-toolkit-provision-value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.directorist-app-toolkit-provision-value .regular-text {
+    width: 100%;
+}
+
+.directorist-app-toolkit-settings .directorist-app-toolkit-provision-value > .directorist-app-toolkit-toggle-secret {
+    box-sizing: border-box;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    margin: 0;
+    padding: 0 !important;
+    line-height: 1 !important;
+    flex: 0 0 40px;
+}
+
+.directorist-app-toolkit-eye-icon {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.directorist-app-toolkit-eye-icon--hide,
+.directorist-app-toolkit-toggle-secret.is-visible .directorist-app-toolkit-eye-icon--show {
+    display: none;
+}
+
+.directorist-app-toolkit-toggle-secret.is-visible .directorist-app-toolkit-eye-icon--hide {
+    display: block;
+}
+
+.directorist-app-toolkit-provision-item__empty {
+    margin: 0;
+    color: #646970;
+    font-style: italic;
+}
+
+.directorist-app-toolkit-provision-item__error {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 12px 0 0;
+    color: #d63638;
+}
+
+.directorist-app-toolkit-provision-item__error .dashicons {
+    flex: 0 0 auto;
+}
+
+.directorist-app-toolkit-provision__endpoint {
+    margin-top: 24px;
+    padding: 16px;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    background: #f6f7f7;
+}
+
+.directorist-app-toolkit-provision__endpoint p {
+    margin-bottom: 0;
+}
+
 @media screen and (max-width: 782px) {
     .directorist-app-toolkit-card .form-table {
         width: calc(100% - 32px);
@@ -207,5 +453,14 @@
 
     .directorist-app-toolkit-actions {
         justify-content: flex-end;
+    }
+
+    .directorist-app-toolkit-provision .directorist-app-toolkit-card__header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .directorist-app-toolkit-provision__items {
+        grid-template-columns: 1fr;
     }
 }
