@@ -270,7 +270,7 @@
     line-height: 1.6;
 }
 
-.directorist-app-toolkit-copy-snippet {
+.directorist-app-toolkit-settings .directorist-app-toolkit-code-snippet > .directorist-app-toolkit-copy-snippet {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -278,12 +278,16 @@
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    min-width: 28px;
-    height: 28px;
-    min-height: 28px;
+    width: 28px !important;
+    min-width: 28px !important;
+    max-width: 28px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
+    margin: 0;
     padding: 0 !important;
-    line-height: 1;
+    line-height: 1 !important;
+    flex: 0 0 28px;
     z-index: 1;
 }
 
