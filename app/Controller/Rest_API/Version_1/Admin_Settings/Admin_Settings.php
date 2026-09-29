@@ -24,10 +24,11 @@ class Admin_Settings extends Rest_Base {
 	protected $rest_base = 'admin-settings';
 
 	protected $read_only_settings = [
-		'has_active_license',
-		'payment_currency_symbol',
-		'listing_currency_symbol',
-	];
+			'has_active_license',
+			'payment_currency_symbol',
+			'listing_currency_symbol',
+			'pricing_plan_type',
+		];
 
 	protected $legacy_settings = [
 		'enable_multi_directory'        => null,
@@ -262,12 +263,30 @@ class Admin_Settings extends Rest_Base {
 			$settings['listing_currency_symbol'] = html_entity_decode( atbdp_currency_symbol( $settings['listing_currency'] ) );
 		}
 
-		$settings['has_active_license'] = License_Manager::has_active_license();
+			$settings['has_active_license'] = License_Manager::has_active_license();
+			$settings['pricing_plan_type']  = $this->get_pricing_plan_type();
 
-		return $settings;
-	}
+			return $settings;
+		}
 
-	/**
+		/**
+		 * Get the active pricing-plan provider used by the app.
+		 *
+		 * @return string
+		 */
+		protected function get_pricing_plan_type() {
+			if ( class_exists( 'DWPP_Pricing_Plans' ) ) {
+				return 'woocommerce';
+			}
+
+			if ( class_exists( 'DirectoristPricingPlan' ) || class_exists( 'ATBDP_Pricing_Plans' ) ) {
+				return 'directorist';
+			}
+
+			return 'none';
+		}
+
+		/**
 	 * Build the flat REST key map for writable settings.
 	 *
 	 * @return array
