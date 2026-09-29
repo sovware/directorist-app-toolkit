@@ -20,7 +20,7 @@ class Apple_Purchase_Verifier {
 
         $bundle_id   = (string) App_Settings::get_setting( 'app_iap_apple_bundle_id', '' );
         $environment = ! empty( App_Settings::get_setting( 'app_iap_apple_test_mode', false ) ) ? 'Sandbox' : 'Production';
-        $account     = In_App_Purchase::get_account_token( 'apple', $user_id );
+        $account     = In_App_Purchase::get_account_token( $user_id );
         $price_nanos = isset( $decoded['price'] ) ? (int) $decoded['price'] * 1000000 : -1;
 
         $checks = [

@@ -5,8 +5,6 @@ namespace DirectoristAppToolkit\Controller\Rest_API\Version_1\In_App_Purchase;
 use DirectoristAppToolkit\Controller\Rest_API\Version_1\Helper\Rest_Base;
 use DirectoristAppToolkit\Helper\Apple_Purchase_Verifier;
 use DirectoristAppToolkit\Helper\App_Settings;
-use DirectoristAppToolkit\Helper\Google_Play_Credentials;
-use DirectoristAppToolkit\Helper\Google_Purchase_Verifier;
 use DirectoristAppToolkit\Helper\In_App_Purchase as IAP_Helper;
 use WP_Error;
 use WP_REST_Request;
@@ -60,18 +58,16 @@ class In_App_Purchase extends Rest_Base {
             return $context;
         }
 
-        $platform = $request->get_param( 'platform' );
-
         return rest_ensure_response(
             [
                 'can_purchase'  => true,
                 'plan_id'       => (int) $request['id'],
-                'platform'      => $platform,
+                'platform'      => 'apple',
                 'order_type'    => $context['order_type'],
                 'product_id'    => $context['product_id'],
                 'price'         => (string) $context['expected_amount'],
                 'currency'      => strtoupper( (string) $context['currency'] ),
-                'account_token' => IAP_Helper::get_account_token( $platform, get_current_user_id() ),
+                'account_token' => IAP_Helper::get_account_token( get_current_user_id() ),
             ]
         );
     }
@@ -102,7 +98,7 @@ class In_App_Purchase extends Rest_Base {
             return new WP_Error( 'directorist_app_iap_order_not_created', __( 'The pricing-plan provider could not create a pending order.', 'directorist-app-toolkit' ), [ 'status' => 500 ] );
         }
 
-        $verifier = 'apple' === $request->get_param( 'platform' ) ? new Apple_Purchase_Verifier() : new Google_Purchase_Verifier();
+        $verifier = new Apple_Purchase_Verifier();
 
         try {
             $verification = $verifier->verify( $payment, $context, get_current_user_id() );
@@ -124,7 +120,7 @@ class In_App_Purchase extends Rest_Base {
             'created_at'     => current_time( 'mysql', true ),
         ];
 
-        if ( ! IAP_Helper::claim_transaction( $verification['platform'], $verification['transaction_id'], $claim ) ) {
+        if ( ! IAP_Helper::claim_transaction( $verification['transaction_id'], $claim ) ) {
             $error = new WP_Error( 'directorist_app_iap_transaction_already_used', __( 'This store transaction has already been used.', 'directorist-app-toolkit' ), [ 'status' => 409 ] );
             do_action( 'directorist_app_toolkit_iap_fail_order', $pending, $error, $context, $request );
             return $error;
@@ -157,7 +153,6 @@ class In_App_Purchase extends Rest_Base {
                 'directorist_app_toolkit_iap_plan_context',
                 null,
                 (int) $request['id'],
-                (string) $request->get_param( 'platform' ),
                 $request
             );
         } catch ( \Throwable $exception ) {
@@ -182,7 +177,7 @@ class In_App_Purchase extends Rest_Base {
             return new WP_Error( 'directorist_app_iap_plan_price_invalid', __( 'This plan has an invalid app-store price or currency configuration.', 'directorist-app-toolkit' ), [ 'status' => 422 ] );
         }
 
-        $configuration = $this->validate_platform_configuration( (string) $request->get_param( 'platform' ) );
+        $configuration = $this->validate_apple_configuration();
         if ( is_wp_error( $configuration ) ) {
             return $configuration;
         }
@@ -190,27 +185,13 @@ class In_App_Purchase extends Rest_Base {
         return $context;
     }
 
-    private function validate_platform_configuration( $platform ) {
-        if ( 'apple' === $platform ) {
-            if ( '' === trim( (string) App_Settings::get_setting( 'app_iap_apple_bundle_id', '' ) ) ) {
-                return new WP_Error( 'directorist_app_iap_apple_not_configured', __( 'Configure the Apple Bundle ID before accepting Apple purchases.', 'directorist-app-toolkit' ), [ 'status' => 503 ] );
-            }
-
-            if ( ! function_exists( 'openssl_verify' ) ) {
-                return new WP_Error( 'directorist_app_iap_openssl_unavailable', __( 'The PHP OpenSSL extension is required to verify Apple purchases.', 'directorist-app-toolkit' ), [ 'status' => 503 ] );
-            }
-
-            return true;
+    private function validate_apple_configuration() {
+        if ( '' === trim( (string) App_Settings::get_setting( 'app_iap_apple_bundle_id', '' ) ) ) {
+            return new WP_Error( 'directorist_app_iap_apple_not_configured', __( 'Configure the Apple Bundle ID before accepting Apple purchases.', 'directorist-app-toolkit' ), [ 'status' => 503 ] );
         }
 
-        if ( '' === trim( (string) App_Settings::get_setting( 'app_iap_google_package_name', '' ) ) ) {
-            return new WP_Error( 'directorist_app_iap_google_not_configured', __( 'Configure the Google Package Name before accepting Google Play purchases.', 'directorist-app-toolkit' ), [ 'status' => 503 ] );
-        }
-
-        $credentials = Google_Play_Credentials::get();
-        if ( is_wp_error( $credentials ) ) {
-            $credentials->add_data( [ 'status' => 503 ] );
-            return $credentials;
+        if ( ! function_exists( 'openssl_verify' ) ) {
+            return new WP_Error( 'directorist_app_iap_openssl_unavailable', __( 'The PHP OpenSSL extension is required to verify Apple purchases.', 'directorist-app-toolkit' ), [ 'status' => 503 ] );
         }
 
         return true;
@@ -219,12 +200,6 @@ class In_App_Purchase extends Rest_Base {
     private function get_common_args() {
         return [
             'id'          => [ 'type' => 'integer', 'minimum' => 1, 'required' => true ],
-            'platform'    => [
-                'type'              => 'string',
-                'required'          => true,
-                'enum'              => [ 'apple', 'google' ],
-                'sanitize_callback' => 'sanitize_key',
-            ],
             'listing_id'  => [ 'type' => 'integer', 'minimum' => 0, 'default' => 0 ],
             'is_featured' => [ 'type' => 'boolean', 'default' => false ],
         ];

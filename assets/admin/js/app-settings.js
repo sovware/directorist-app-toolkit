@@ -138,17 +138,6 @@ jQuery(function ($) {
         activateTab($(this).data('tab'));
     });
 
-    $page.on('click', '.directorist-app-toolkit-platform-tab', function () {
-        var $button = $(this);
-        var $form = $button.closest('form');
-        var platform = $button.data('platform-tab');
-
-        $form.find('.directorist-app-toolkit-platform-tab').removeClass('is-active');
-        $button.addClass('is-active');
-        $form.find('.directorist-app-toolkit-platform-panel').removeClass('is-active');
-        $form.find('.directorist-app-toolkit-platform-panel[data-platform-panel="' + platform + '"]').addClass('is-active');
-    });
-
     var initialTab = window.location.hash ? window.location.hash.replace('#', '') : config.activeTab;
     activateTab(initialTab || $tabLinks.first().data('tab'), false);
 
