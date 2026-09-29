@@ -27,6 +27,7 @@ class Admin_Settings extends Rest_Base {
 		'has_active_license',
 		'payment_currency_symbol',
 		'listing_currency_symbol',
+		'pricing_plan_type',
 	];
 
 	protected $legacy_settings = [
@@ -37,6 +38,9 @@ class Admin_Settings extends Rest_Base {
 		'terms_conditions'              => null,
 		'skip_plan_page'                => null,
 		'plan_direct_purchase'          => null,
+		'allow_multiple_plans_per_directory_type' => null,
+		'enable_listing_display_priority'          => null,
+		'restrict_listing_deletion'                => null,
 		'payment_currency'              => null,
 		'payment_thousand_separator'    => null,
 		'payment_decimal_separator'     => null,
@@ -263,8 +267,26 @@ class Admin_Settings extends Rest_Base {
 		}
 
 		$settings['has_active_license'] = License_Manager::has_active_license();
+		$settings['pricing_plan_type']  = $this->get_pricing_plan_type();
 
 		return $settings;
+	}
+
+	/**
+	 * Get the active pricing-plan provider used by the app.
+	 *
+	 * @return string
+	 */
+	protected function get_pricing_plan_type() {
+		if ( class_exists( 'DWPP_Pricing_Plans' ) ) {
+			return 'woocommerce';
+		}
+
+		if ( class_exists( 'DirectoristPricingPlan' ) || class_exists( 'ATBDP_Pricing_Plans' ) ) {
+			return 'directorist';
+		}
+
+		return 'none';
 	}
 
 	/**

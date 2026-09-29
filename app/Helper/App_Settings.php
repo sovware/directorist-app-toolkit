@@ -351,6 +351,26 @@ class App_Settings {
                     ],
                 ],
             ],
+            'in_app_purchase' => [
+                'label'       => __( 'In-App Purchase', 'directorist-app-toolkit' ),
+                'description' => __( 'Configure the app identifier and verification mode used for one-time Apple purchases.', 'directorist-app-toolkit' ),
+                'option_key'  => 'directorist_app_toolkit_in_app_purchase_settings',
+                'fields'      => [
+                    'app_iap_apple_test_mode' => [
+                        'label'       => __( 'Test Mode', 'directorist-app-toolkit' ),
+                        'type'        => 'checkbox',
+                        'default'     => false,
+                        'description' => __( 'Accept StoreKit Sandbox transactions. Disable this on production sites.', 'directorist-app-toolkit' ),
+                    ],
+                    'app_iap_apple_bundle_id' => [
+                        'label'       => __( 'Bundle ID', 'directorist-app-toolkit' ),
+                        'type'        => 'text',
+                        'default'     => '',
+                        'placeholder' => __( 'com.example.directory', 'directorist-app-toolkit' ),
+                        'description' => __( 'Must exactly match the bundle identifier in App Store Connect.', 'directorist-app-toolkit' ),
+                    ],
+                ],
+            ],
         ];
 
         return apply_filters( 'directorist_app_toolkit_settings_tabs', $tabs );

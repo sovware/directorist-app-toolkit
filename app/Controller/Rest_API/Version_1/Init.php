@@ -31,6 +31,7 @@ class Init {
         return [
             Admin_Settings\Init::class,
             Users\Init::class,
+            In_App_Purchase\Init::class,
         ];
     }
 }
