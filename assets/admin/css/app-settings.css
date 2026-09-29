@@ -42,6 +42,43 @@
     color: #50575e;
 }
 
+.directorist-app-toolkit-platform-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 24px 24px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #dcdcde;
+}
+
+.directorist-app-toolkit-platform-tab.is-active {
+    border-color: #2271b1;
+    background: #2271b1;
+    color: #fff;
+}
+
+.directorist-app-toolkit-platform-panel {
+    display: none;
+}
+
+.directorist-app-toolkit-platform-panel.is-active {
+    display: table-row;
+}
+
+.directorist-app-toolkit-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+}
+
+.directorist-app-toolkit-status.is-valid {
+    color: #008a20;
+}
+
+.directorist-app-toolkit-status.is-invalid {
+    color: #b32d2e;
+}
+
 .directorist-app-toolkit-card .form-table {
     width: calc(100% - 48px);
     margin: 8px 24px 0;

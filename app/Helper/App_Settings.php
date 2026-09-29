@@ -351,6 +351,47 @@ class App_Settings {
                     ],
                 ],
             ],
+            'in_app_purchase' => [
+                'label'       => __( 'In-App Purchase', 'directorist-app-toolkit' ),
+                'description' => __( 'Configure the app identifiers and verification mode used for one-time Apple and Google Play purchases.', 'directorist-app-toolkit' ),
+                'option_key'  => 'directorist_app_toolkit_in_app_purchase_settings',
+                'platform_tabs' => [
+                    'apple'  => __( 'Apple', 'directorist-app-toolkit' ),
+                    'google' => __( 'Google', 'directorist-app-toolkit' ),
+                ],
+                'fields'      => [
+                    'app_iap_apple_test_mode' => [
+                        'label'       => __( 'Test Mode', 'directorist-app-toolkit' ),
+                        'type'        => 'checkbox',
+                        'platform'    => 'apple',
+                        'default'     => false,
+                        'description' => __( 'Accept StoreKit Sandbox transactions. Disable this on production sites.', 'directorist-app-toolkit' ),
+                    ],
+                    'app_iap_apple_bundle_id' => [
+                        'label'       => __( 'Bundle ID', 'directorist-app-toolkit' ),
+                        'type'        => 'text',
+                        'platform'    => 'apple',
+                        'default'     => '',
+                        'placeholder' => __( 'com.example.directory', 'directorist-app-toolkit' ),
+                        'description' => __( 'Must exactly match the bundle identifier in App Store Connect.', 'directorist-app-toolkit' ),
+                    ],
+                    'app_iap_google_test_mode' => [
+                        'label'       => __( 'Test Mode', 'directorist-app-toolkit' ),
+                        'type'        => 'checkbox',
+                        'platform'    => 'google',
+                        'default'     => false,
+                        'description' => __( 'Accept Google Play license-test purchases. Disable this on production sites.', 'directorist-app-toolkit' ),
+                    ],
+                    'app_iap_google_package_name' => [
+                        'label'       => __( 'Package Name', 'directorist-app-toolkit' ),
+                        'type'        => 'text',
+                        'platform'    => 'google',
+                        'default'     => '',
+                        'placeholder' => __( 'com.example.directory', 'directorist-app-toolkit' ),
+                        'description' => __( 'Must exactly match the application package name in Google Play Console.', 'directorist-app-toolkit' ),
+                    ],
+                ],
+            ],
         ];
 
         return apply_filters( 'directorist_app_toolkit_settings_tabs', $tabs );

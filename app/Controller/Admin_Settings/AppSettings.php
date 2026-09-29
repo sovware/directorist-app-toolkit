@@ -3,6 +3,7 @@
 namespace DirectoristAppToolkit\Controller\Admin_Settings;
 
 use DirectoristAppToolkit\Helper\App_Settings as Settings_Helper;
+use DirectoristAppToolkit\Helper\Google_Play_Credentials;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -219,6 +220,16 @@ class AppSettings {
                         </div>
                     </div>
 
+                    <?php if ( ! empty( $tab['platform_tabs'] ) ) : ?>
+                        <nav class="directorist-app-toolkit-platform-tabs" aria-label="<?php esc_attr_e( 'In-app purchase platforms', 'directorist-app-toolkit' ); ?>">
+                            <?php foreach ( $tab['platform_tabs'] as $platform_key => $platform_label ) : ?>
+                                <button type="button" class="button directorist-app-toolkit-platform-tab<?php echo 'apple' === $platform_key ? ' is-active' : ''; ?>" data-platform-tab="<?php echo esc_attr( $platform_key ); ?>">
+                                    <?php echo esc_html( $platform_label ); ?>
+                                </button>
+                            <?php endforeach; ?>
+                        </nav>
+                    <?php endif; ?>
+
                     <table class="form-table" role="presentation">
                         <tbody>
                             <?php foreach ( $tab['fields'] as $field_key => $field ) : ?>
@@ -231,6 +242,9 @@ class AppSettings {
                                 $this->render_field_row( $field_key, $field, isset( $values[ $field_key ] ) ? $values[ $field_key ] : '' );
                                 ?>
                             <?php endforeach; ?>
+                            <?php if ( ! empty( $tab['platform_tabs']['google'] ) ) : ?>
+                                <?php $this->render_google_credentials_status(); ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
 
@@ -246,6 +260,33 @@ class AppSettings {
                 </div>
             </form>
         </section>
+        <?php
+    }
+
+    /**
+     * Render the read-only Google service-account configuration status.
+     *
+     * @return void
+     */
+    protected function render_google_credentials_status() {
+        $status = Google_Play_Credentials::get_status();
+        ?>
+        <tr class="directorist-app-toolkit-platform-panel" data-platform-panel="google">
+            <th scope="row"><?php esc_html_e( 'Service Account Status', 'directorist-app-toolkit' ); ?></th>
+            <td>
+                <span class="directorist-app-toolkit-status <?php echo $status['valid'] ? 'is-valid' : 'is-invalid'; ?>">
+                    <span class="dashicons <?php echo $status['valid'] ? 'dashicons-yes-alt' : 'dashicons-warning'; ?>" aria-hidden="true"></span>
+                    <?php echo esc_html( $status['message'] ); ?>
+                </span>
+                <?php if ( ! $status['valid'] ) : ?>
+                    <p class="description">
+                        <?php echo wp_kses_post( __( 'Define <code>DIRECTORIST_APP_GOOGLE_PLAY_CREDENTIALS_FILE</code> in <code>wp-config.php</code> with the absolute path to a readable Google service-account JSON file.', 'directorist-app-toolkit' ) ); ?>
+                    </p>
+                <?php elseif ( ! empty( $status['client_email'] ) ) : ?>
+                    <p class="description"><?php echo esc_html( $status['client_email'] ); ?></p>
+                <?php endif; ?>
+            </td>
+        </tr>
         <?php
     }
 
@@ -281,8 +322,9 @@ class AppSettings {
     protected function render_field_row( $field_key, $field, $value ) {
         $field_id = 'directorist-app-toolkit-' . $field_key;
         $type     = isset( $field['type'] ) ? $field['type'] : 'text';
+        $platform = ! empty( $field['platform'] ) ? (string) $field['platform'] : '';
         ?>
-        <tr>
+        <tr class="<?php echo $platform ? 'directorist-app-toolkit-platform-panel' . ( 'apple' === $platform ? ' is-active' : '' ) : ''; ?>"<?php echo $platform ? ' data-platform-panel="' . esc_attr( $platform ) . '"' : ''; ?>>
             <th scope="row">
                 <label for="<?php echo esc_attr( $field_id ); ?>">
                     <?php echo esc_html( $field['label'] ); ?>
